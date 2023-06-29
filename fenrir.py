@@ -13,12 +13,14 @@ def isValid(s):
             stack.append(bra)  # スタックに入れる
         elif bra in brackets.keys():  # 閉括弧の場合
             bra_val = brackets[bra]  # 対応する開括弧
-            if bra_val == stack.pop(): # 閉括弧と対応する開括弧がスタックの先頭にあったら
-                pass
-            elif bra_val != stack.pop():  #
-                return False
-            elif stack == []:  # 一番最初から閉じ括弧が来た場合
+            if not stack:  # 一番最初から閉じ括弧が来た場合
                 return False  # 間違い
+            elif bra_val == stack[-1]:  # 閉括弧と対応する開括弧がスタックの先頭にあったら
+                stack.pop()
+                continue
+            elif bra_val != stack.pop():  # スタックの先頭の括弧が閉括弧に対応していなかったら
+                return False  # 間違い
+
     return True
 
 
@@ -27,4 +29,6 @@ print(isValid(s))
 s = "()"
 print(isValid(s))
 s = "([]){}"
+print(isValid(s))
+s = "}()[]{"
 print(isValid(s))
