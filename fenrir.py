@@ -1,4 +1,4 @@
-def isValid(s):
+def isValid(s: str) -> bool:
     # 各鉤括弧に対応した辞書
     brackets = {
         ")": "(",
@@ -13,22 +13,19 @@ def isValid(s):
             stack.append(bra)  # スタックに入れる
         elif bra in brackets.keys():  # 閉括弧の場合
             bra_val = brackets[bra]  # 対応する開括弧
-            if not stack:  # 一番最初から閉じ括弧が来た場合
+            if not stack or bra_val != stack[-1]:  # 一番最初から閉じ括弧が来たか、スタックの先頭の括弧が閉括弧に対応していなかったら
                 return False  # 間違い
             elif bra_val == stack[-1]:  # 閉括弧と対応する開括弧がスタックの先頭にあったら
-                stack.pop()
-                continue
-            elif bra_val != stack.pop():  # スタックの先頭の括弧が閉括弧に対応していなかったら
-                return False  # 間違い
+                stack.pop()  # stackから取り出す
 
-    return True
+    return stack == []  # ループが終わって、スタックの中に括弧がないなら正しい
 
 
 s = "({)}"
-print(isValid(s))
+print(isValid(s))  # False
 s = "()"
-print(isValid(s))
+print(isValid(s))  # True
 s = "([]){}"
-print(isValid(s))
+print(isValid(s))  # True
 s = "}()[]{"
-print(isValid(s))
+print(isValid(s))  # False
